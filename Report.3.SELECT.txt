@@ -1,0 +1,259 @@
+Report for Labwork 3
+
+1. All info of all employees
+
+Command: 
+
+mysql> select * from employees;
+
+Output: 
+
+| 499981 | 1955-01-02 | Yunming        | Mitina           | F      | 1991-03-07 |
+| 499982 | 1954-08-25 | Mohammed       | Pleszkun         | M      | 1986-02-21 |
+| 499983 | 1955-08-29 | Uri            | Juneja           | F      | 1989-08-28 |
+| 499984 | 1959-08-31 | Kaijung        | Rodham           | M      | 1985-09-11 |
+| 499985 | 1964-12-26 | Gila           | Lukaszewicz      | M      | 1997-02-11 |
+| 499986 | 1952-07-22 | Nathan         | Ranta            | F      | 1985-08-11 |
+| 499987 | 1961-09-05 | Rimli          | Dusink           | F      | 1998-09-20 |
+| 499988 | 1962-09-28 | Bangqing       | Kleiser          | F      | 1986-06-06 |
+| 499989 | 1954-05-26 | Keiichiro      | Lindqvist        | M      | 1993-10-28 |
+| 499990 | 1963-11-03 | Khaled         | Kohling          | M      | 1985-10-10 |
+| 499991 | 1962-02-26 | Pohua          | Sichman          | F      | 1989-01-12 |
+| 499992 | 1960-10-12 | Siamak         | Salverda         | F      | 1987-05-10 |
+| 499993 | 1963-06-04 | DeForest       | Mullainathan     | M      | 1997-04-07 |
+| 499994 | 1952-02-26 | Navin          | Argence          | F      | 1990-04-24 |
+| 499995 | 1958-09-24 | Dekang         | Lichtner         | F      | 1993-01-12 |
+| 499996 | 1953-03-07 | Zito           | Baaz             | M      | 1990-09-27 |
+| 499997 | 1961-08-03 | Berhard        | Lenart           | M      | 1986-04-21 |
+| 499998 | 1956-09-05 | Patricia       | Breugel          | M      | 1993-10-13 |
+| 499999 | 1958-05-01 | Sachin         | Tsukuda          | M      | 1997-11-30 |
++--------+------------+----------------+------------------+--------+------------+
+300024 rows in set (0,33 sec)
+
+2. All info of all departments
+
+Command: 
+
+mysql> select * from departments;
+
+Output:
+
++---------+--------------------+
+| dept_no | dept_name          |
++---------+--------------------+
+| d009    | Customer Service   |
+| d005    | Development        |
+| d002    | Finance            |
+| d003    | Human Resources    |
+| d001    | Marketing          |
+| d004    | Production         |
+| d006    | Quality Management |
+| d008    | Research           |
+| d007    | Sales              |
++---------+--------------------+
+9 rows in set (0,00 sec)
+
+3. Full names of all employees
+
+Command: 
+
+select concat (first_name, ' ', last_name) as full_name from employees;
+
+Output:
+
+| Uri Juneja                     |
+| Kaijung Rodham                 |
+| Gila Lukaszewicz               |
+| Nathan Ranta                   |
+| Rimli Dusink                   |
+| Bangqing Kleiser               |
+| Keiichiro Lindqvist            |
+| Khaled Kohling                 |
+| Pohua Sichman                  |
+| Siamak Salverda                |
+| DeForest Mullainathan          |
+| Navin Argence                  |
+| Dekang Lichtner                |
+| Zito Baaz                      |
+| Berhard Lenart                 |
+| Patricia Breugel               |
+| Sachin Tsukuda                 |
++--------------------------------+
+300024 rows in set (0,21 sec)
+
+
+4. Names of all departments
+
+Command:
+
+mysql> select dept_name from departments;
+
+Output:
+
++--------------------+
+| dept_name          |
++--------------------+
+| Customer Service   |
+| Development        |
+| Finance            |
+| Human Resources    |
+| Marketing          |
+| Production         |
+| Quality Management |
+| Research           |
+| Sales              |
++--------------------+
+9 rows in set (0,00 sec)
+
+5. Full names of employees working in "Sales" department
+
+Command:
+
+select concat (first_name, ' ', last_name) as full_name from employees 
+join dept_emp on employees.emp_no = dept_emp.emp_no 
+join departments on dept_emp.dept_no = departments.dept_no  where dept_name = 'Sales';
+
+Output:
+
+
+| Maja Lamba                    |
+| Raimond Leuchs                |
+| Mong Usdin                    |
+| Make Terekhov                 |
+| Aloke Wuwongse                |
+| Masako Angiulli               |
+| Christ Murtagh                |
+| Youpyo Perfilyeva             |
+| Leszek Pulkowski              |
+| Gaetan Veldwijk               |
+| Mihalis Crabtree              |
+| Bangqing Bodoff               |
+| Guozhong Felder               |
+| Gino Usery                    |
+| Nathan Ranta                  |
+| Rimli Dusink                  |
+| Bangqing Kleiser              |
++-------------------------------+
+52245 rows in set (0,18 sec)
+
+
+6. Full names of male employees working in "Finance" department
+
+Command:
+
+select concat (first_name, ' ', last_name) as full_name from employees
+join dept_emp on employees.emp_no = dept_emp.emp_no 
+join departments on dept_emp.dept_no = departments.dept_no  
+where gender = 'M' and dept_name = 'Finance';
+
+
+Output:
+
+| Huican Gelosh                |
+| Masamitsu Matheson           |
+| Doohun Pelz                  |
+| Parto Kambil                 |
+| Haldun Mullainathan          |
+| Ymte Potthoff                |
+| Nagui Stamatiou              |
+| Bernd Gluchowski             |
+| Phillip Panienski            |
+| Sastry Szmurlo               |
+| Jacopo Hasham                |
+| Moon Pleszkun                |
+| Hercules Porotnikoff         |
+| Shaz Bierbaum                |
+| Masali Chorvat               |
+| Keiichiro Lindqvist          |
+| Patricia Breugel             |
++------------------------------+
+10331 rows in set (0,06 sec)
+
+
+7. Salaries of female employees working in "Marketing" department
+
+Command:
+
+select salary from salaries
+join employees on salaries.emp_no = employees.emp_no
+join dept_emp on employees.emp_no = dept_emp.emp_no
+join departments on dept_emp.dept_no = departments.dept_no 
+where gender = 'F' and dept_name = 'Marketing';
+
+Output:
+
+|  47320 |
+|  50713 |
+|  52539 |
+|  56516 |
+|  59357 |
+|  63601 |
+|  64778 |
+|  65475 |
+|  69488 |
+|  72212 |
+|  71874 |
+|  73574 |
+|  76708 |
+|  79327 |
+|  80389 |
++--------+
+74996 rows in set (0,32 sec)
+
+8. Full names of employees who was paid more than $100000
+
+Command:
+
+select distinct (concat (first_name,' ', last_name)) as full_name from employees 
+join salaries on employees.emp_no = salaries.emp_no 
+where salary > '10000';
+
+Output:
+
+| Zvonko Veeraraghavan           |
+| Zvonko Ventosa                 |
+| Zvonko Vesna                   |
+| Zvonko Viele                   |
+| Zvonko Vigier                  |
+| Zvonko Waeselynck              |
+| Zvonko Waterhouse              |
+| Zvonko Whitcomb                |
+| Zvonko Wielonsky               |
+| Zvonko Wilharm                 |
+| Zvonko Wroclawski              |
+| Zvonko Yetto                   |
+| Zvonko Yoshizawa               |
+| Zvonko Yurov                   |
+| Zvonko Zambonelli              |
+| Zvonko Zobel                   |
+| Zvonko Zuberek                 |
++--------------------------------+
+279408 rows in set (4,01 sec)
+
+9. Names of all departments that have employees paid more than $100000
+
+Command:
+
+select distinct dept_name from departments
+join dept_emp on departments.dept_no = dept_emp.dept_no
+join employees on dept_emp.emp_no = employees.emp_no
+join salaries on employees.emp_no = salaries.emp_no
+where salary > '10000';
+
+Output:
+
++--------------------+
+| dept_name          |
++--------------------+
+| Customer Service   |
+| Development        |
+| Finance            |
+| Human Resources    |
+| Marketing          |
+| Production         |
+| Quality Management |
+| Research           |
+| Sales              |
++--------------------+
+9 rows in set (0,00 sec)
+
