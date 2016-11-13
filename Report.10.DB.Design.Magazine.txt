@@ -1,0 +1,125 @@
+Report 10
+
+1. Determine concepts that need to be stored:
+
+	- magazines
+	- articles
+	- authors
+
+2. Determine attributes of each concept:
+
+	- magazines
+		+ title
+		+ ISSN
+		+ magazine_no
+		+ year
+
+	- articles
+		+ title
+		+ startPage
+		+ endPage
+
+	- authors
+		+ name
+		+ email
+		+ ascription
+		
+
+3. Determine links
+
+magazines and articles: one to many
+articles and authors: many to one
+
+4. Determine types of attributes
+
+	- magazines
+		+ title VARCHAR(20)
+		+ ISSN INT
+		+ magazine_no INT
+		+ year DATE
+
+	- articles
+		+ title VARCHAR(20)
+		+ startPage INT
+		+ endPage INT
+
+	- authors
+		+ name VARCHAR(20)
+		+ email VARCHAR(20)
+		+ ascription VARCHAR(500)
+
+5. Solve foreign key links
+
+	- magazines
+		+ magazineID INT --> primary key
+		+ title VARCHAR(20)
+		+ ISSN INT
+		+ magazine_no INT
+		+ year DATE
+
+	- articles
+		+ articleID INT --> primary key
+		+ title VARCHAR(20)
+		+ startPage INT
+		+ endPage INT
+
+	- authors
+		+ authorID INT --> primary key
+		+ name VARCHAR(20)
+		+ email VARCHAR(20)
+		+ ascription VARCHAR(500)
+
+6. Implementation
+
+	- Create new Database named software:
+
+		 create database magazine;
+	Query OK, 1 row affected (0,00 sec)
+
+	- Create 3 tables on the database:
+
+		create table magazines (
+			magazineID INT NOT NULL AUTO_INCREMENT,
+			title VARCHAR(20),
+			ISSN INT,
+			magazine_no INT,
+			year DATE,
+			PRIMARY KEY (magazineID)
+			);
+
+		Query OK, 0 rows affected (0,01 sec)
+
+		create table articles (
+			articleID INT NOT NULL AUTO_INCREMENT,
+			title VARCHAR(20),
+			startPage INT,
+			endPage INT,
+			PRIMARY KEY (articleID)
+			);
+
+		Query OK, 0 rows affected (0,01 sec)
+
+		create table authors (
+			authorID INT NOT NULL AUTO_INCREMENT,
+			name VARCHAR(20),
+			email VARCHAR(20),
+			ascription VARCHAR(500),
+			PRIMARY KEY (authorID)
+			);
+
+		Query OK, 0 rows affected (0,02 sec)
+
+
+		
+
+	show tables;
+
+	+--------------------+
+	| Tables_in_magazine |
+	+--------------------+
+	| articles           |
+	| authors            |
+	| magazines          |
+	+--------------------+
+	3 rows in set (0,00 sec)
+

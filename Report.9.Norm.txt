@@ -1,0 +1,54 @@
+Report 9
+
+Which normal form does the employee database satisfy?
+3NF
+
+Why?
+because in employees:
+- Each column containts atomic value
+- No Repeated columns
+- Each non-key column depends on the primary keys (emp_no)
+- It has the relation "one to many" with all other related tables
+
+
+Produde a 3NF of the following Order form document by normalization
+
+Tables:
+
+1. products 
+
++--------------------+
+| products           | 
++--------------------+
+| ProdID             |
+| Prod_name          |      
++--------------------+
+
+
+2. orders 
+
++--------------------+
+| orders             | 
++--------------------+
+| orderID            |
+| cus_ID             |
+| orderDate          |
+| ProdID             |
+| cusID              |
+| description        |
+| price              |
+| quantity           |        
++--------------------+
+
+3. customers
+
++--------------------+
+| customers          | 
++--------------------+
+| cusID              |
+| cus_name           |
+| phone_num          |
+| address            |
+| city               |        
++--------------------+
+

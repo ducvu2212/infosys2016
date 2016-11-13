@@ -1,0 +1,150 @@
+Report 8
+
+Pre-requisites:
+
+- Download sakila-db
+- Extract and install sakila database
+
+1. List names of all the languages in the database (sorted
+alphabetically)?
+
+select * from language order by name;
++-------------+----------+---------------------+
+| language_id | name     | last_update         |
++-------------+----------+---------------------+
+|           1 | English  | 2006-02-15 05:02:19 |
+|           5 | French   | 2006-02-15 05:02:19 |
+|           6 | German   | 2006-02-15 05:02:19 |
+|           2 | Italian  | 2006-02-15 05:02:19 |
+|           3 | Japanese | 2006-02-15 05:02:19 |
+|           4 | Mandarin | 2006-02-15 05:02:19 |
++-------------+----------+---------------------+
+6 rows in set (0,00 sec)
+
+2. List full names of actors with "GER" in their last name,
+ordered by their first name
+
+select concat (first_name, ' ', last_name) as full_name 
+from actor 
+where last_name like '%GER%' 
+order by first_name;
+
++-------------------+
+| full_name         |
++-------------------+
+| CAMERON ZELLWEGER |
+| JULIA ZELLWEGER   |
+| MICHAEL BOLGER    |
+| MINNIE ZELLWEGER  |
+| VAL BOLGER        |
+| VIVIEN BASINGER   |
++-------------------+
+6 rows in set (0,01 sec)
+
+
+3. Find all the addresses where postal code starts with "57",
+and return addresses sorted.
+
+select address, postal_code
+from address
+where postal_code like '57%'
+order by address;
+
++-----------------------------------+-------------+
+| address                           | postal_code |
++-----------------------------------+-------------+
+| 1029 Dzerzinsk Manor              | 57519       |
+| 1061 Ede Avenue                   | 57810       |
+| 1287 Xiangfan Boulevard           | 57844       |
+| 1309 Weifang Street               | 57338       |
+| 1515 Korla Way                    | 57197       |
+| 1697 Kowloon and New Kowloon Loop | 57807       |
+| 231 Kaliningrad Place             | 57833       |
+| 390 Wroclaw Way                   | 5753        |
+| 431 Szkesfehrvr Avenue            | 57828       |
+| 687 Alessandria Parkway           | 57587       |
+| 869 Shikarpur Way                 | 57380       |
++-----------------------------------+-------------+
+11 rows in set (0,00 sec)
+
+
+4. How many films involve a "DWARF" in their titles?
+
+select count(film_id)
+from film
+where title like '%DWARF%';
+
++----------------+
+| count(film_id) |
++----------------+
+|              2 |
++----------------+
+1 row in set (0,00 sec)
+
+
+5. Find full names of actors who played in a film involving
+’WAR’ in title and longer than 2.5 hours, along with the
+title, run length and release year of the movie, sorted by the
+actors’ last names
+
+select concat (first_name, ' ', last_name) as full_name, film.title, film.length
+from actor
+join film_actor on actor.actor_id = film_actor.actor_id
+join film on film_actor.film_id = film.film_id
+where film.title like '%WAR%' and film.length > 150
+order by actor.last_name;
+
++-------------------+---------------------+--------+
+| full_name         | title               | length |
++-------------------+---------------------+--------+
+| ANGELINA ASTAIRE  | WARDROBE PHANTOM    |    178 |
+| KARL BERRY        | LEATHERNECKS DWARFS |    153 |
+| SUSAN DAVIS       | LEATHERNECKS DWARFS |    153 |
+| RIVER DEAN        | WARDROBE PHANTOM    |    178 |
+| SPENCER DEPP      | LEATHERNECKS DWARFS |    153 |
+| BOB FAWCETT       | LEATHERNECKS DWARFS |    153 |
+| GREGORY GOODING   | WARDROBE PHANTOM    |    178 |
+| ADAM GRANT        | GLADIATOR WESTWARD  |    173 |
+| KIRK JOVOVICH     | GLADIATOR WESTWARD  |    173 |
+| KIRK JOVOVICH     | WARDROBE PHANTOM    |    178 |
+| JULIA MCQUEEN     | GLADIATOR WESTWARD  |    173 |
+| PENELOPE MONROE   | LEATHERNECKS DWARFS |    153 |
+| WARREN NOLTE      | WARDROBE PHANTOM    |    178 |
+| JAYNE SILVERSTONE | GLADIATOR WESTWARD  |    173 |
+| IAN TANDY         | GLADIATOR WESTWARD  |    173 |
+| IAN TANDY         | LEATHERNECKS DWARFS |    153 |
+| THORA TEMPLE      | WARDROBE PHANTOM    |    178 |
+| WALTER TORN       | WARDROBE PHANTOM    |    178 |
+| NICK WAHLBERG     | WARDROBE PHANTOM    |    178 |
+| UMA WOOD          | LEATHERNECKS DWARFS |    153 |
+| CAMERON ZELLWEGER | GLADIATOR WESTWARD  |    173 |
++-------------------+---------------------+--------+
+21 rows in set (0,00 sec)
+
+
+6. Find all the film categories in which there are between 55
+and 65 films. Return the names of these categories and the
+number of films per category, sorted by the number of films
+descending.
+
+select name
+from category
+join film_category on category.category_id = film_category.category_id
+where cnt_film > 55 and cnt_film < 65 in
+(select count(film_id), category_id group by (category_id) as cnt_film
+from film_category)
+order by film_category.film_id desc;
+
+
+7. In how many film categories is the average difference
+between the film replacement cost and the rental rate larger
+than 17?
+
+8. Find the address district(s) name(s) such that the minimal
+postal code in the district(s) is maximal over all the
+districts. Make sure your query ignores empty postal codes
+and district names.
+
+9. Find the names (first and last) of all the actors and
+customers whose first name is the same as the first name of
+the actor with ID 101 (exclude the actor with ID 101).

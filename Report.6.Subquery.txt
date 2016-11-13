@@ -1,0 +1,126 @@
+Report 6
+
+1. Who have the same name as the managers of the “Finance”
+department?
+
+select first_name, last_name from employees
+
+where last_name in
+(select last_name from employees 
+	join titles on employees.emp_no = titles.emp_no
+	join dept_emp on employees.emp_no = dept_emp.emp_no
+	join departments on dept_emp.dept_no = departments.dept_no
+	where titles.title = 'Manager' and departments.dept_name = 'Finance');
+
+Output:
+
+| Shaw          | Alpin      |
+| Qiwen         | Alpin      |
+| Kristine      | Alpin      |
+| Conrado       | Alpin      |
+| Uri           | Legleitner |
+| Danil         | Alpin      |
+| Constantijn   | Legleitner |
+| Anoosh        | Legleitner |
+| Aiichiro      | Legleitner |
+| Gift          | Legleitner |
+| Xinan         | Legleitner |
+| Gilbert       | Alpin      |
+| Ramalingam    | Alpin      |
+| Ekawit        | Alpin      |
+| Hilary        | Legleitner |
+| Geoffry       | Alpin      |
+| Heping        | Alpin      |
+| Hidde         | Alpin      |
++---------------+------------+
+408 rows in set (0,67 sec)
+
+2. Who in the “Production” department were hired after the
+promotion of the last manager in that department?
+
+Command:
+
+
+select employees.first_name, employees.last_name, dept_emp.from_date 
+from dept_emp join employees on dept_emp.emp_no = employees.emp_no 
+where dept_no='d004' AND DATE(from_date) > (
+select MAX(from_date) from dept_manager where dept_no='d004');
+
+Output:
+
+| Shirish        | Rettelbach       | 1999-10-28 |
+| Constantine    | Michaels         | 1998-01-23 |
+| Yoshinari      | Theuretzbacher   | 1999-04-05 |
+| Teiji          | Tsukuda          | 1998-04-21 |
+| Dharmaraja     | Range            | 2000-07-02 |
+| Masako         | Heiserman        | 1998-12-10 |
+| Florina        | Cusworth         | 1999-10-17 |
+| Hilary         | Rodiger          | 1999-10-16 |
+| Sergi          | Melton           | 1998-11-01 |
+| Tuval          | Hardjono         | 1999-10-27 |
+| Cordelia       | Paludetto        | 1999-04-09 |
+| Uwe            | Uludag           | 1997-03-05 |
+| Shuichi        | Piazza           | 1996-12-11 |
+| Uri            | Juneja           | 2001-12-09 |
+| DeForest       | Mullainathan     | 1997-04-07 |
+| Dekang         | Lichtner         | 1997-06-02 |
+| Sachin         | Tsukuda          | 1997-11-30 |
++----------------+------------------+------------+
+19513 rows in set (0,39 sec)
+
+
+3. Find the average salary of each department, from highest to lowest.
+
+
+select dept_no, AVG(avgsal) as avg from 
+(select salaries.emp_no, AVG(salaries.salary) as avgsal from salaries
+group by salaries.emp_no) as avg_salary
+join employees on avg_salary.emp_no = employees.emp_no
+join dept_emp on employees.emp_no = dept_emp.emp_no
+group by dept_emp.dept_no
+order by avg desc;
+
+Output:
+
++---------+----------------+
+| dept_no | avg            |
++---------+----------------+
+| d011    | 75852.69558780 |
+| d002    | 68061.43501801 |
+| d004    | 57253.31382027 |
+| d010    | 57188.90672100 |
+| d009    | 56480.08591880 |
+| d006    | 54892.93507273 |
+| d003    | 53214.29085744 |
++---------+----------------+
+7 rows in set (3,95 sec)
+
+
+
+
+4. Find the average salary of each job title, from highest to
+lowest
+
+select titles.title, AVG(avgsal) as avg from
+(select salaries.emp_no, AVG(salaries.salary) as avgsal from salaries
+group by salaries.emp_no) as avg_salary
+join employees on avg_salary.emp_no = employees.emp_no
+join titles on titles.emp_no = employees.emp_no
+group by titles.title
+order by avg desc;
+
+Output:
+
++--------------------+----------------+
+| title              | avg            |
++--------------------+----------------+
+| Senior Staff       | 69119.55058257 |
+| Staff              | 66956.82969188 |
+| Manager            | 66044.38422083 |
+| Senior Engineer    | 59144.76835191 |
+| Engineer           | 57244.45845623 |
+| Technique Leader   | 57034.81413021 |
+| Assistant Engineer | 56963.53043254 |
++--------------------+----------------+
+7 rows in set (4,75 sec)
+

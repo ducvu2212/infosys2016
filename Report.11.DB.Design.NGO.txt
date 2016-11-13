@@ -1,0 +1,198 @@
+Report 11
+
+1. Determine concepts that need to be stored:
+
+	- offices
+	- projects
+	- managers
+	- actions
+	- cities
+
+2. Determine attributes of each concept:
+
+	- offices
+		+ name
+		+ address
+		+ directorName
+		+ directorNum
+
+	- directors
+		+ name
+		+ phoneNum
+
+	- projects
+		+ code
+		+ title
+		+ startDate
+		+ endDate
+		+ budget
+
+	- managers
+		+ name
+		+ projects
+
+	- cities
+		+ citiesName
+		+ country
+		
+		
+	- countries
+		+ name
+
+3. Determine links
+
+offices and directors: one to one
+offices and projects: one to many
+projects and managers: many to one
+offices and cities: many to one
+offices and countries: many to one
+
+4. Determine types of attributes
+
+	 offices
+		+ name VARCHAR(20)
+		+ address VARCHAR(20)
+		+ directorName VARCHAR(20)
+		+ directorNum INT
+
+	- directors
+		+ name VARCHAR(20)
+		+ phoneNum INT
+
+	- projects
+		+ code INT
+		+ title VARCHAR(50)
+		+ startDate DATE
+		+ endDate DATE
+		+ budget FLOAT 
+ 
+	- managers
+		+ name VARCHAR(20)
+		+ projects VARCHAR(50)
+
+	- cities
+		+ citiesName VARCHAR(20)
+		+ countryName VARCHAR(20)
+		
+		
+	- countries
+		+ name VARCHAR(20)
+
+5. Solve foreign key links
+
+	
+	- offices
+	 	+ officeID INT --> primary key
+		+ name VARCHAR(20)
+		+ address VARCHAR(20)
+		+ directorName VARCHAR(20)
+		+ directorNum INT
+
+	- directors
+		+ directorID INT --> primary key
+		+ name VARCHAR(20)
+		+ phoneNum INT
+
+	- projects
+		+ projectID INT --> primary key
+		+ title VARCHAR(50)
+		+ startDate DATE
+		+ endDate DATE
+		+ budget FLOAT 
+ 
+	- managers
+		+ managerID INT --> primary key
+		+ name VARCHAR(20)
+		+ projects VARCHAR(50)
+
+	- cities
+		+ cityID INT --> primary key
+		+ citiesName VARCHAR(20)
+		+ countryName VARCHAR(20)
+		
+		
+	- countries
+		+ countryID INT --> primary key
+		+ name VARCHAR(20)
+
+6. Implementation
+
+- Create new Database named NGO;
+
+		 create database NGO;
+	Query OK, 1 row affected (0,00 sec)
+
+	- Create 6 tables on the database:
+
+		create table offices (
+			officeID INT NOT NULL AUTO_INCREMENT,
+			name VARCHAR(20),
+			address VARCHAR(20),
+		 	directorName VARCHAR(20),
+			directorNum INT,
+			PRIMARY KEY (officeID)
+			);
+
+		Query OK, 0 rows affected (0,02 sec)
+
+		create table directors (
+			directorID INT NOT NULL AUTO_INCREMENT,
+			name VARCHAR(20),
+			phoneNum INT,
+			PRIMARY KEY (directorID)
+			);
+
+		Query OK, 0 rows affected (0,01 sec)
+
+		create table projects (
+			projectID INT NOT NULL AUTO_INCREMENT,
+			title VARCHAR(50),
+			startDate DATE,
+			endDate DATE,
+			budget FLOAT,
+			PRIMARY KEY (projectID)
+			);
+
+		Query OK, 0 rows affected (0,02 sec)
+ 
+		create table managers (
+			managerID INT NOT NULL AUTO_INCREMENT,
+			name VARCHAR(20),
+			projects VARCHAR(50),
+			PRIMARY KEY (managerID)
+			);
+
+		Query OK, 0 rows affected (0,01 sec)
+
+
+		create table cities (
+			cityID INT NOT NULL AUTO_INCREMENT,
+			citiesName VARCHAR(20),
+			countryName VARCHAR(20),
+			PRIMARY KEY (cityID)
+			);
+		
+		Query OK, 0 rows affected (0,02 sec)
+		
+		create table countries (
+			countryID INT NOT NULL AUTO_INCREMENT,
+			name VARCHAR(20),
+			PRIMARY KEY (countryID)
+			);
+
+		Query OK, 0 rows affected (0,01 sec)
+
+	show tables;
+
+	+---------------+
+	| Tables_in_NGO |
+	+---------------+
+	| cities        |
+	| countries     |
+	| directors     |
+	| managers      |
+	| offices       |
+	| projects      |
+	+---------------+
+	6 rows in set (0,00 sec)
+
